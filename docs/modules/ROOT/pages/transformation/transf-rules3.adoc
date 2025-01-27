@@ -10,8 +10,8 @@ In this section are specified transformation rules for UML datatypes and enumera
 |UML element |Rules in core ontology layer |Rules in data shape layer |Rules in reasoning layer
 |Primitive datatype |<<rule:datatype-core>> | |
 |Structured datatype |<<rule:datatype-structured-core>> | |
-|Enumeration |<<rule:enumeration-core>> | |<<rule:enumeration-rc>>
-|Enumeration item |<<rule:enumeration-item-core>> | |
+|Enumeration |<<rule:enumeration-core>> | <<rule:enumeration-ds>> |<<rule:enumeration-rc>>
+|Enumeration item |<<rule:enumeration-item-core>> | <<rule:enumeration-item-ds>> |
 |===
 
 [[sec:primitive-type]]
@@ -117,18 +117,28 @@ See applicable rules in Section on xref:transformation/transf-rules1.adoc#sec:cl
 
 === Enumeration
 
-UML Enumerations [xref:references.adoc#ref:uml2.5[uml2.5]] are kinds of datatypes, whose values correspond to one of user-defined literals. They should be transformed into SKOS [xref:references.adoc#ref:skos-spec[skos-spec]] concept schemes comprising the concepts corresponding to enumerated items.
+UML Enumerations [xref:references.adoc#ref:uml2.5[uml2.5]] are kinds of datatypes, having zero or more values that correspond to one of user-defined literals. They are transformed into SKOS [xref:references.adoc#ref:skos-spec[skos-spec]] concept schemes comprising enumeration values represented as SKOS concepts. 
 
 
-.Visual representation of a UML Enumeration
+Two possible cases of UML enumerations can be identified:
+
+1. enumeration without items: such an enumeration is used as a reference to an externally defined controlled list.
+2. enumeration with items: such an enumeration serves as a complete representation of a controlled list defined within the UML model.
+
+.Visual representation of a UML Enumeration without items
+[#fig:enumeration-uml-visual]
+image::f20.png[20]
+
+.Visual representation of a UML Enumeration with items
 [#fig:enumeration-uml-visual]
 image::f17.png[17]
+
 
 .Visual representation of a SKOS concept scheme with concepts
 [#fig:enumeration-owl-visual]
 image::f18.png[18]
 
-IMPORTANT: Normally, the controlled list represented by UML Enumerations will be defined externally. In order to be ale to validate some data against the generate SHACL shapes, these controlled lists need to be imported into the SHACL shapes. Moreover, the restriction module should be also imported into the SHACL module, alongside the OWL core module.
+IMPORTANT: Normally, the controlled list represented by UML Enumerations will be defined externally and represented as an enumeration without items in the UML model. In order to be able to validate some data against the generated SHACL shapes, these controlled lists need to be imported. Moreover, the restriction module should be also imported into the SHACL module, alongside the OWL core module.
 
 
 [#rule:enumeration-core,source,XML,caption='',title='{example-caption} {counter:rule-cnt:D01}. Enumeration -- in core ontology layer',reftext='{example-caption} {rule-cnt}']
@@ -154,6 +164,37 @@ Ideally, in the implementation, this rule would be combined with the relevant ru
 <skos:ConceptScheme rdf:about = "http://base.onto.uri/EnumerationName">
 </skos:ConceptScheme>
 ----
+|===
+
+[#rule:enumeration-ds,source,XML,caption='',title='{example-caption} {counter:rule-cnt:D01}. Enumeration  -- in data shape layer',reftext='{example-caption} {rule-cnt}']
+====
+Specify SHACL NodeShape declaration axiom for each UML Enumeration. The URIs of the node shape is deterministically generated from the UML Enumeration name. Set `skos:ConceptScheme` as the expected type within the node shape.
+====
+
+[cols="a,a", options="noheader"]
+|===
+|
+.shape in Turtle syntax
+[source,Turtle]
+----
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+@prefix shape: <http://base.shape.uri/> .
+
+shape:EnumerationName a sh:NodeShape ;
+	sh:targetClass skos:ConceptScheme .
+----
+|
+.shape in RDF/XML syntax
+[source,XML]
+----
+<rdf:Description rdf:about="http://base.shape.uri/EnumerationName">
+  <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+  <sh:targetClass rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+</rdf:Description>
+----
+
 |===
 
 [#rule:enumeration-rc,source,XML,caption='',title='{example-caption} {counter:rule-cnt:D01}. Enumeration -- in reasoning layer',reftext='{example-caption} {rule-cnt}']
@@ -228,3 +269,68 @@ Ideally, in the implementation, this rule would be combined with the relevant ru
 </skos:Concept>
 ----
 |===
+
+
+
+[#rule:enumeration-item-ds,source,XML,caption='',title='{example-caption} {counter:rule-cnt:D01}. Enumeration item -- in data shape layer',reftext='{example-caption} {rule-cnt}']
+====
+Specify SHACL NodeShape for items of an enumeration for each UML Enumeration. The URIs of the node shape is deterministically generated from the UML Enumeration name. Apply one of the two possible node shapes, depending the _constraint level_ set for the UML Enumeration as defined in xref:../uml/conv-enumerations.adoc#sec:enumeration[rule:enumeration-constraint-level]:
+
+. _permissive_: set `skos:Concept` as the expected type of the enumeration item
+. _restrictive_: set constraint for the enumeration item belonging to a concept scheme represented by the enumeration URI
+====
+
+[cols="a,a", options="noheader"]
+|===
+|
+.permissive shape in Turtle syntax
+[source,Turtle]
+----
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+@prefix shape: <http://base.shape.uri/> .
+
+shape:EnumerationName-itemShape a sh:NodeShape ;
+    sh:targetClass skos:Concept .
+----
+|
+.permissive shape in RDF/XML syntax
+[source,XML]
+----
+<rdf:Description rdf:about="http://base.shape.uri/EnumerationName-itemShape">
+  <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+  <sh:targetClass rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+</rdf:Description>
+----
+|
+.restrictive shape in Turtle syntax
+[source,Turtle]
+----
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+@prefix : <http://base.onto.uri/> .
+@prefix shape: <http://base.shape.uri/> .
+
+shape:EnumerationName-itemShape a sh:NodeShape ;
+    sh:property [
+        sh:path skos:inScheme ;
+        sh:hasValue :EnumerationName ;
+    ] .
+----
+|
+.restrictive shape in RDF/XML syntax
+[source,XML]
+----
+<rdf:Description rdf:about="http://base.shape.uri/EnumerationName-itemShape">
+  <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+  <sh:property rdf:parseType="Resource">
+    <sh:path rdf:resource="http://www.w3.org/2004/02/skos/core#inScheme"/>
+    <sh:hasValue rdf:resource="http://base.onto.uri/EnumerationName"/>
+  </sh:property>
+</rdf:Description>
+----
+
+|===
+
