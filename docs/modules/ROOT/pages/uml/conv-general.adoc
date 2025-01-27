@@ -327,9 +327,34 @@ In addition to these SEMIC recommendation for providing good definitions, we als
 [[sec:controlled-lists]]
 === Controlled lists
 
-The controlled list is a carefully selected list of words and phrases and is often employed in the modelling practices. The controlled list has a name, and a set of terms. For example, the list of grammatical genders can be named "Gender" and comprise the terms "masculine", "feminine", "neuter" and "utrum".
+The controlled list (also referred to as a controlled vocabulary) is a carefully selected list of words and phrases and is often employed in the modelling practices. The controlled list has a name, and a set of terms. For example, the list of grammatical genders can be named "Gender" and comprise the terms "masculine", "feminine", "neuter" and "utrum".
 
 As a rule of thumb, but not always, the relationship between the controlled list as a whole and its comprising elements can be informally conceptualised as a class-instance, class-subclass, set-item, or part-whole.
+
+
+[[rule:incorporation-of-controlled-list]]
+|===
+|{set:cellbgcolor: #a8c6f7}
+ *Title:* Incorporation of controlled lists
+
+|{set:cellbgcolor: #f5f8fc}
+*Identifier:* rule:incorporation-of-controlled-list
+|*Statement:*
+
+Controlled list should be defined externally and referenced in the UML conceptual model
+|===
+
+*Description:*
+
+Controlled lists play an essential role in establishing interoperability standards. Management and publication of controlled lists should happen as a separate process, and are not addressed here. References to controlled lists shall be done via uml:Enumeration elements.
+
+The expectation is that the controlled lists are published in accordance with best practices and represented with the SKOS model using persistent identifiers. In such an approach, the controlled list is expressed as a `skos:ConceptScheme` and the specific values as `skos:Concept`(s). Also, such controlled lists are often developed, published and maintained independently following their own lifecycle, so that they can be reused in other models.
+Therefore, a common use case for the UML Enumeration is to be used as a reference to an externally defined controlled list (see xref:../transformation/transf-rules3.adoc#sec:enumeration[enumerations]). 
+
+Another possible use of UML Enumeration is to define a controlled list within the conceptual model.
+In that setup, a UML Enumeration element contains one or more enumeration items. 
+This approach is not recommended as it violates separation of concerns principle and hinders independent development and management of the controlled vocabulary.
+
 
 [[rule:gen-controlled-list]]
 |===
@@ -346,10 +371,7 @@ shall be represented as uml:Enumeration element.
 |===
 
 *Description:*
-
-Controlled lists play an essential role in establishing interoperability standards. Management and publication of controlled lists should happen as a separate process, and are not addressed here. References to controlled lists shall be done via uml:Enumeration elements.
-
-The expectation is that the controlled lists are published in accordance with best practices and represented with the SKOS model using persistent identifiers. In such an approach, the controlled list is expressed as a `skos:ConceptScheme` and the specific values as `skos:Concept`(s). Also, such controlled lists are often developed, published and maintained independently following their own lifecycle, so that they can be reused in other models.
+When a modelled property is foreseen to have a discrete set of values, the range of this property should be described using a reference to appropriate code list defining these values.
 
 Two use-cases can be identified in practice: (a) when the code list is known and is explicitly referred to as the range of a property, and (b) when a property is modelled but no code list reference is provided as its range.
 
