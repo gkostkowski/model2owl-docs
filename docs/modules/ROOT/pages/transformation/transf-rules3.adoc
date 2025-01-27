@@ -115,6 +115,7 @@ Specify OWL class declaration axiom for UML structured datatype.
 
 See applicable rules in Section on xref:transformation/transf-rules1.adoc#sec:class[Class Rules].
 
+[[sec:enumeration]]
 === Enumeration
 
 UML Enumerations [xref:references.adoc#ref:uml2.5[uml2.5]] are kinds of datatypes, having zero or more values that correspond to one of user-defined literals. They are transformed into SKOS [xref:references.adoc#ref:skos-spec[skos-spec]] concept schemes comprising enumeration values represented as SKOS concepts. 
@@ -274,7 +275,7 @@ Ideally, in the implementation, this rule would be combined with the relevant ru
 
 [#rule:enumeration-item-ds,source,XML,caption='',title='{example-caption} {counter:rule-cnt:D01}. Enumeration item -- in data shape layer',reftext='{example-caption} {rule-cnt}']
 ====
-Specify SHACL NodeShape for items of an enumeration for each UML Enumeration. The URIs of the node shape is deterministically generated from the UML Enumeration name. Apply one of the two possible node shapes, depending the _constraint level_ set for the UML Enumeration as defined in xref:../uml/conv-enumerations.adoc#sec:enumeration[rule:enumeration-constraint-level]:
+Specify SHACL NodeShape for items of an enumeration for each UML Enumeration. The URIs of the node shape is deterministically generated from the UML Enumeration name. Apply one of the two possible node shapes, depending the _constraint level_ set for the UML Enumeration as defined in xref:../uml/conv-enumerations.adoc#rule:enumeration-constraint-level[rule:enumeration-constraint-level]:
 
 . _permissive_: set `skos:Concept` as the expected type of the enumeration item
 . _restrictive_: set constraint for the enumeration item belonging to a concept scheme represented by the enumeration URI
