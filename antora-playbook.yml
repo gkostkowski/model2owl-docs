@@ -12,7 +12,7 @@ content:
   sources:
 #    - url: .
     - url: https://github.com/meaningfy-ws/model2owl-docs
-      branches: [ main ]
+      branches: [ feature/M2O2-13 ]
       start_path: docs
 ui:
   bundle:
