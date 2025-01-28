@@ -127,11 +127,11 @@ Two possible cases of UML enumerations can be identified:
 2. enumeration with items: such an enumeration serves as a complete representation of a controlled list defined within the UML model.
 
 .Visual representation of a UML Enumeration without items
-[#fig:enumeration-uml-visual]
+[#fig:enumeration-uml-visual-wo-items]
 image::f20.png[20]
 
 .Visual representation of a UML Enumeration with items
-[#fig:enumeration-uml-visual]
+[#fig:enumeration-uml-with-items]
 image::f17.png[17]
 
 
@@ -183,16 +183,16 @@ Specify SHACL NodeShape declaration axiom for each UML Enumeration. The URIs of 
 
 @prefix shape: <http://base.shape.uri/> .
 
-shape:EnumerationName a sh:NodeShape ;
+shape:EnumName a sh:NodeShape ;
 	sh:targetClass skos:ConceptScheme .
 ----
 |
 .shape in RDF/XML syntax
 [source,XML]
 ----
-<rdf:Description rdf:about="http://base.shape.uri/EnumerationName">
-  <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-  <sh:targetClass rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+<rdf:Description rdf:about = "http://base.shape.uri/EnumName">
+  <rdf:type rdf:resource = "http://...shacl#NodeShape"/>
+  <sh:targetClass rdf:resource = "http://...skos/core#ConceptScheme"/>
 </rdf:Description>
 ----
 
@@ -292,16 +292,16 @@ Specify SHACL NodeShape for items of an enumeration for each UML Enumeration. Th
 
 @prefix shape: <http://base.shape.uri/> .
 
-shape:EnumerationName-itemShape a sh:NodeShape ;
+shape:EnumName-itemShape a sh:NodeShape ;
     sh:targetClass skos:Concept .
 ----
 |
 .permissive shape in RDF/XML syntax
 [source,XML]
 ----
-<rdf:Description rdf:about="http://base.shape.uri/EnumerationName-itemShape">
-  <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-  <sh:targetClass rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+<rdf:Description rdf:about = "http://base.shape.uri/EnumName-itemShape">
+  <rdf:type rdf:resource = "http://...shacl#NodeShape"/>
+  <sh:targetClass rdf:resource = "http://...skos/core#Concept"/>
 </rdf:Description>
 ----
 |
@@ -314,21 +314,21 @@ shape:EnumerationName-itemShape a sh:NodeShape ;
 @prefix : <http://base.onto.uri/> .
 @prefix shape: <http://base.shape.uri/> .
 
-shape:EnumerationName-itemShape a sh:NodeShape ;
+shape:EnumName-itemShape a sh:NodeShape ;
     sh:property [
         sh:path skos:inScheme ;
-        sh:hasValue :EnumerationName ;
+        sh:hasValue :EnumName ;
     ] .
 ----
 |
 .restrictive shape in RDF/XML syntax
 [source,XML]
 ----
-<rdf:Description rdf:about="http://base.shape.uri/EnumerationName-itemShape">
-  <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-  <sh:property rdf:parseType="Resource">
-    <sh:path rdf:resource="http://www.w3.org/2004/02/skos/core#inScheme"/>
-    <sh:hasValue rdf:resource="http://base.onto.uri/EnumerationName"/>
+<rdf:Description rdf:about = "http://base.shape.uri/EnumName-itemShape">
+  <rdf:type rdf:resource = "http://...shacl#NodeShape"/>
+  <sh:property rdf:parseType = "Resource">
+    <sh:path rdf:resource = "http://...skos/core#inScheme"/>
+    <sh:hasValue rdf:resource = "http://base.onto.uri/EnumName"/>
   </sh:property>
 </rdf:Description>
 ----

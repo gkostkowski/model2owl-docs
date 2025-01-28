@@ -48,7 +48,7 @@ An uml:Enumeration items are restricted according to one of two constraint level
 
 *Description:*
 
-Formal specification of a controlled list is important for enabling validation of data described with the model. Particularly, this is required for the purpose of validating values of properties expecting a controlled list values (as described in xref:../transformation/transf-rules2.adoc#rule:rule:dependency-uni-range-ds[rule:rule:dependency-uni-range-ds]). 
+Formal specification of a controlled list is important for enabling validation of data described with the model. Particularly, this is required for the purpose of validating values of properties expecting a controlled list values (as described in xref:../transformation/transf-rules2.adoc#rule:dependency-uni-range-ds[rule:dependency-uni-range-ds]). 
 
 However, providing such a formal specification (incorporated into the conceptual model as described in xref:./conv-general.adoc#rule:incorporation-of-controlled-list[rule:incorporation-of-controlled-list]) for validation purposes is not always possible or desirable. For example, a SKOS specification of the controlled list may not exist. Therefore, SHACL shapes for corresponding enumerations, that implements constraints for validation purposes, accomodate for these two scenarios. 
 It is done by introducing a concept of a constraint level that is used to specify restrictiveness of a NodeShape for an enumeration. Every UML Enumeration element is expected to specify the constraint level. There are two constraint levels that are suitable for the two presented use cases:

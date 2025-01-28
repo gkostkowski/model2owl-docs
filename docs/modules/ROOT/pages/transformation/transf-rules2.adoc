@@ -500,16 +500,16 @@ Within the SHACL PropertyShape corresponding to a dependency relation linked to 
 
 shape:ClassName-relationName a sh:PropertyShape ;
     sh:path :relationName;
-    sh:node shape:EnumerationName-itemShape .
+    sh:node shape:EnumName-itemShape .
 ----
 |
 .Property class constraint in RDF/XML syntax
 [source,XML]
 ----
-<rdf:Description rdf:about="http://base.shape.uri/ClassName-relationName">
-  <rdf:type rdf:resource="http://www.w3.org/ns/shacl#PropertyShape"/>
-  <sh:path rdf:resource="http://base.onto.uri/relationName"/>
-  <sh:node rdf:resource="http://base.shape.uri/EnumerationName-itemShape"/>
+<rdf:Description rdf:about = "http://base.shape.uri/ClassName-relationName">
+  <rdf:type rdf:resource = "http://...shacl#PropertyShape"/>
+  <sh:path rdf:resource = "http://base.onto.uri/relationName"/>
+  <sh:node rdf:resource = "http://base.shape.uri/EnumName-itemShape"/>
 </rdf:Description>
 ----
 |===
