@@ -10,7 +10,7 @@ In this section are specified transformation rules for UML datatypes and enumera
 |UML element |Rules in core ontology layer |Rules in data shape layer |Rules in reasoning layer
 |Primitive datatype |<<rule:datatype-core>> | |
 |Structured datatype |<<rule:datatype-structured-core>> | |
-|Enumeration |<<rule:enumeration-core>> | <<rule:enumeration-ds>> |<<rule:enumeration-rc>>
+|Enumeration |<<rule:enumeration-core>> | |<<rule:enumeration-rc>>
 |Enumeration item |<<rule:enumeration-item-core>> | <<rule:enumeration-item-ds>> |
 |===
 
@@ -167,36 +167,7 @@ Ideally, in the implementation, this rule would be combined with the relevant ru
 ----
 |===
 
-[#rule:enumeration-ds,source,XML,caption='',title='{example-caption} {counter:rule-cnt:D01}. Enumeration  -- in data shape layer',reftext='{example-caption} {rule-cnt}']
-====
-Specify SHACL NodeShape declaration axiom for each UML Enumeration. The URIs of the node shape is deterministically generated from the UML Enumeration name. Set `skos:ConceptScheme` as the expected type within the node shape.
-====
 
-[cols="a,a", options="noheader"]
-|===
-|
-.shape in Turtle syntax
-[source,Turtle]
-----
-@prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-
-@prefix shape: <http://base.shape.uri/> .
-
-shape:EnumName a sh:NodeShape ;
-	sh:targetClass skos:ConceptScheme .
-----
-|
-.shape in RDF/XML syntax
-[source,XML]
-----
-<rdf:Description rdf:about = "http://base.shape.uri/EnumName">
-  <rdf:type rdf:resource = "http://...shacl#NodeShape"/>
-  <sh:targetClass rdf:resource = "http://...skos/core#ConceptScheme"/>
-</rdf:Description>
-----
-
-|===
 
 [#rule:enumeration-rc,source,XML,caption='',title='{example-caption} {counter:rule-cnt:D01}. Enumeration -- in reasoning layer',reftext='{example-caption} {rule-cnt}']
 ====
@@ -275,37 +246,14 @@ Ideally, in the implementation, this rule would be combined with the relevant ru
 
 [#rule:enumeration-item-ds,source,XML,caption='',title='{example-caption} {counter:rule-cnt:D01}. Enumeration item -- in data shape layer',reftext='{example-caption} {rule-cnt}']
 ====
-Specify SHACL NodeShape for items of an enumeration for each UML Enumeration. The URIs of the node shape is deterministically generated from the UML Enumeration name. Apply one of the two possible node shapes, depending the _constraint level_ set for the UML Enumeration as defined in xref:../uml/conv-enumerations.adoc#rule:enumeration-constraint-level[rule:enumeration-constraint-level]:
-
-. _permissive_: set `skos:Concept` as the expected type of the enumeration item
-. _restrictive_: set constraint for the enumeration item belonging to a concept scheme represented by the enumeration URI
+Specify a _restrictive_ SHACL NodeShape for items of an enumeration for each UML Enumeration in the _defining_ mode (based on the _constraint level_ set for the UML Enumeration as defined in xref:../uml/conv-enumerations.adoc#rule:enumeration-constraint-level[rule:enumeration-constraint-level]). The URIs of the node shape is deterministically generated from the UML Enumeration name. 
+Set a constraint for the enumeration item belonging to a concept scheme represented by the enumeration URI.
 ====
 
 [cols="a,a", options="noheader"]
 |===
 |
-.permissive shape in Turtle syntax
-[source,Turtle]
-----
-@prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-
-@prefix shape: <http://base.shape.uri/> .
-
-shape:EnumName-itemShape a sh:NodeShape ;
-    sh:targetClass skos:Concept .
-----
-|
-.permissive shape in RDF/XML syntax
-[source,XML]
-----
-<rdf:Description rdf:about = "http://base.shape.uri/EnumName-itemShape">
-  <rdf:type rdf:resource = "http://...shacl#NodeShape"/>
-  <sh:targetClass rdf:resource = "http://...skos/core#Concept"/>
-</rdf:Description>
-----
-|
-.restrictive shape in Turtle syntax
+.Restrictive shape in Turtle syntax
 [source,Turtle]
 ----
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -321,7 +269,7 @@ shape:EnumName-itemShape a sh:NodeShape ;
     ] .
 ----
 |
-.restrictive shape in RDF/XML syntax
+.Restrictive shape in RDF/XML syntax
 [source,XML]
 ----
 <rdf:Description rdf:about = "http://base.shape.uri/EnumName-itemShape">
