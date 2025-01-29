@@ -168,6 +168,9 @@ Ideally, in the implementation, this rule would be combined with the relevant ru
 |===
 
 
+[TIP]
+The tool does not generate SHACL shapes for concept schemes (`skos:ConceptScheme`) used to represent controlled lists. It is recommended to download the SHACL shapes for SKOS [xref:references.adoc#ref:skos-shapes[skos-shacl]] and use these for validation purposes. 
+
 
 [#rule:enumeration-rc,source,XML,caption='',title='{example-caption} {counter:rule-cnt:D01}. Enumeration -- in reasoning layer',reftext='{example-caption} {rule-cnt}']
 ====
