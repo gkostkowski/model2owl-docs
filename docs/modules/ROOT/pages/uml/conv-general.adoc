@@ -346,15 +346,22 @@ Controlled list should be defined externally and referenced in the UML conceptua
 
 *Description:*
 
-Controlled lists play an essential role in establishing interoperability standards. Management and publication of controlled lists should happen as a separate process, and are not addressed here. References to controlled lists shall be done via uml:Enumeration elements.
+There are two possible use cases for incorporating a controlled list in the conceptual model:
 
-The expectation is that the controlled lists are published in accordance with best practices and represented with the SKOS model using persistent identifiers. In such an approach, the controlled list is expressed as a `skos:ConceptScheme` and the specific values as `skos:Concept`(s). Also, such controlled lists are often developed, published and maintained independently following their own lifecycle, so that they can be reused in other models.
-Therefore, a common use case for the UML Enumeration is to be used as a reference to an externally defined controlled list (see xref:../transformation/transf-rules3.adoc#sec:enumeration[enumerations]). 
+1. referencing case: An externally defined controlled list is referenced in the model by its URI.
+2. defining case: A controlled list is defined within the model together with its items.
 
-Another possible use of UML Enumeration is to define a controlled list within the conceptual model.
+The use cases are properly represented in the UML conceptual model by using an UML Enumeration element as described in xref:../transformation/transf-rules3.adoc#sec:enumeration[enumerations]. 
+
+*Referencing case*
+
+Controlled lists play an essential role in establishing interoperability standards. Management and publication of controlled lists should happen as a separate process, and are not addressed here. Such controlled lists are developed, published and maintained independently following their own lifecycle, so that they can be reused in other models.
+References to controlled lists shall be done via uml:Enumeration elements without defined items.
+
+*Defining case*
+
+The expectation is that the designed controlled lists are published in accordance with best practices and represented with the SKOS model using persistent identifiers. In such an approach, a controlled list is expressed as a `skos:ConceptScheme` and the specific values as `skos:Concept`(s). 
 In that setup, a UML Enumeration element contains one or more enumeration items. 
-This approach is not recommended as it violates separation of concerns principle and hinders independent development and management of the controlled vocabulary.
-
 
 [[rule:gen-controlled-list]]
 |===
