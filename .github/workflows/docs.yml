@@ -1,0 +1,8 @@
+name: Build Documentation
+on:
+  push:
+jobs:
+build-tools:
+runs-on: ubuntu-latest
+steps:
+- run: echo 1
